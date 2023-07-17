@@ -1,6 +1,41 @@
+# punto 1 - Funzione Ricorsiva
+# ciascuna cella nera contenente un numero abbia attaccate 
+# esattamente il numero di lampadine richiesto
+def check_lampadine(mat, i, j, n, m):
+    if (i >= n):
+        return 'SI'
+    if (j >= m):
+        return check_lampadine(mat, i+1, 0, n, m)
+    else:
+        if (is_cellanera(mat,i,j)):
+            if (contalampadine(mat, i, j, n, m) != mat[i][j]):
+                return 'NO'
+    
+    return check_lampadine(mat, i, j+1, n, m)
+
+## punto 2 - tutte le celle vuote siano illuminate.
+def celle_vuote_illuminate(mat, n, m):   
+    for i in range(n):
+        for j in range(m):
+            if (mat[i][j] == -1):
+                if (not is_cella_illuminata(mat, i, j, n, m, 0)):
+                    return 'NO'
+    return 'SI'    
+
+## punto 3 - che non ci siano lampadine che si illuminano tra loro.
+def punto3(mat, n, m):
+    for i in range(n):
+        for j in range(m):
+            if (mat[i][j] == 6):
+                if (is_cella_illuminata(mat, i, j, n, m, 0)):
+                    return 'NO'
+    return 'SI'
+
+## Funzione ausiliare per il punto 1
 def is_cellanera(mat,i,j):
     return (mat[i][j] >= 0 and mat[i][j] <= 4)
 
+## Funzione ausiliare per il punto 1
 def contalampadine(mat, i, j, n, m):
     count = 0 
     if (i >= 0 and j >= 0):
@@ -18,22 +53,8 @@ def contalampadine(mat, i, j, n, m):
             count += 1
     return count
 
-# punto 1 - Funzione Ricorsiva
-# ciascuna cella nera contenente un numero abbia attaccate 
-# esattamente il numero di lampadine richiesto
-def check_lampadine(mat, i, j, n, m):
-    if (i >= n):
-        return 'SI'
-    if (j >= m):
-        return check_lampadine(mat, i+1, 0, n, m)
-    else:
-        if (is_cellanera(mat,i,j)):
-            if (contalampadine(mat, i, j, n, m) != mat[i][j]):
-                return 'NO'
-    
-    return check_lampadine(mat, i, j+1, n, m)
 
-
+## Funzione ricorsiva e ausiliare per i punti 2 e 3.
 def is_cella_illuminata(mat, i, j, n, m, direzione):
     # 0 -> sopra
     # 1 -> giu'
@@ -71,32 +92,7 @@ def is_cella_illuminata(mat, i, j, n, m, direzione):
                     return is_cella_illuminata(mat, i, j, n, m, direzione+1)
             return is_cella_illuminata(mat, i, j, n, m, direzione+1)
 
-    
-
-def celle_vuote_illuminate(mat, n, m):   
-    for i in range(n):
-        for j in range(m):
-            if (mat[i][j] == -1):
-                if (not is_cella_illuminata(mat, i, j, n, m, 0)):
-                    return 'NO'
-    return 'SI'    
-
-def punto3(mat, n, m):
-    for i in range(n):
-        for j in range(m):
-            if (mat[i][j] == 6):
-                if (is_cella_illuminata(mat, i, j, n, m, 0)):
-                    return 'NO'
-    return 'SI'
-
-def esito_lampadine(mat): 
-    for i in range(len(mat)):
-        for j in range(len(mat[0])):
-            if (is_cellanera(mat[i][j])):
-                if (not check_lampadine(mat, i, j, 0, 1)):
-                    return "NO"
-    return "SI"
-
+## Prima idea di funzione ricorsiva... tenuta come ricordo.
 def check_lampadine_mia(m,i, j, count, direzione):
     if (direzione == 5 and m[i][j] == count):
         return True
@@ -133,18 +129,6 @@ def input_matrice(x, y):
             r.append(int(input()))
         m.append(r)
     return m 
-
-def print_matrice(matrice):
-    for i in range(len(matrice)):
-        riga = ""
-        for j in range(len(matrice[0])):
-            if (matrice[i][j] == 6):
-                riga+="[💡]"
-            elif (matrice[i][j] == 5):
-                riga +="[◼️]"
-            else:
-                riga += f"[{str(matrice[i][j])}]"
-        print(riga)
 
 def main():
     n = int(input())

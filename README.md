@@ -1,2 +1,2 @@
 # Fondamenti1-Unical
-My solutions to Fondamenti 1 exercises. 
+My solutions for Fondamenti 1 excercises during the course.  
